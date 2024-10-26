@@ -1,4 +1,5 @@
 services:
+
  frontend:
     image: upload_frontend:latest
     ports:
@@ -6,9 +7,16 @@ services:
 
  backend:
   image: upload_backend:latest
+  volumes:
+    - fileupload:/fileupload
   ports:
     - 8080:8080/tcp
  
+ filechecker:
+  image: upload_filechecker:latest
+  volumes:
+     - fileupload:/fileupload
+
  #apache tika server with ocr
  tika:
     image: logicalspark/docker-tikaserver:latest
