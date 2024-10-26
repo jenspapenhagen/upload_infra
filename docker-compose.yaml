@@ -2,12 +2,12 @@ services:
  frontend:
     image: upload_frontend:latest
     ports:
-    - 8080:80/tcp
+    - 80:80/tcp
 
  backend:
   image: upload_backend:latest
-
-
+  ports:
+    - 8080:8080/tcp
  
  #apache tika server with ocr
  tika:
