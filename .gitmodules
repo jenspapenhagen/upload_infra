@@ -1,0 +1,9 @@
+[submodule "filechecker"]
+	path = filechecker
+	url = https://github.com/jenspapenhagen/upload_filechecker
+[submodule "frontend"]
+	path = frontend
+	url = https://github.com/jenspapenhagen/upload_frontend
+[submodule "backend"]
+	path = backend
+	url = https://github.com/jenspapenhagen/upload_backend
