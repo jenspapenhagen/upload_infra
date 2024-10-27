@@ -8,14 +8,15 @@ services:
  backend:
   image: upload_backend:latest
   volumes:
-    - fileupload:/fileupload
+  - /uploadfiles:/app/uploadfiles
   ports:
-    - 8080:8080/tcp
+  - 8080:8080/tcp
  
  filechecker:
   image: upload_filechecker:latest
   volumes:
-     - fileupload:/fileupload
+  - /uploadfiles:/app/uploadfiles
+   #  - /path/from/host:/path/to/container
 
  #apache tika server with ocr
  tika:
@@ -30,12 +31,12 @@ services:
    image: ollama/ollama
    container_name: ollama
    ports:
-    - 11434:11434/tcp
+   - 11434:11434/tcp
    healthcheck:
      test: ollama --version || exit 1
    command: serve
    volumes:
-     - ollama:/root/.ollama
+   - ollama:/root/.ollama
    deploy:
      resources:
        reservations:
@@ -48,19 +49,19 @@ services:
  qdrant:
     image: qdrant/qdrant:latest
     ports:
-      - 6333:6333/tcp
-      - 6334:6334/tcp
+    - 6333:6333/tcp
+    - 6334:6334/tcp
     healthcheck:
       test:
-        - CMD-SHELL
-        - bash -c ':> /dev/tcp/127.0.0.1/6333' || exit 1
+      - CMD-SHELL
+      - bash -c ':> /dev/tcp/127.0.0.1/6333' || exit 1
       interval: 60s
       timeout: 5s
       retries: 3
     volumes:
-      - ./qdrant_data:/qdrant/storage
+    - ./qdrant_data:/qdrant/storage
     profiles:
-      - local
+    - local
 
 
 volumes:
