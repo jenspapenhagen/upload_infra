@@ -1,72 +1,13 @@
-services:
-
- frontend:
-    image: upload_frontend:latest
-    ports:
-    - 80:80/tcp
-
- backend:
-  image: upload_backend:latest
-  volumes:
-  - /uploadfiles:/app/uploadfiles
-  ports:
-  - 8080:8080/tcp
- 
- filechecker:
-  image: upload_filechecker:latest
-  volumes:
-  - /uploadfiles:/app/uploadfiles
-   #  - /path/from/host:/path/to/container
-
- #apache tika server with ocr
- tika:
-    image: logicalspark/docker-tikaserver:latest
-    container_name: tika  
-    ports:
-      - 9998:9998/tcp
-    restart: unless-stopped
-
- #ollama with GPU
- ollama:
-   image: ollama/ollama
-   container_name: ollama
-   ports:
-   - 11434:11434/tcp
-   healthcheck:
-     test: ollama --version || exit 1
-   command: serve
-   volumes:
-   - ollama:/root/.ollama
-   deploy:
-     resources:
-       reservations:
-         devices:
-           - driver: nvidia
-             device_ids: ['all']
-             capabilities: [gpu]
-
- #Qdrant as vector db     
- qdrant:
-    image: qdrant/qdrant:latest
-    container_name: qdrant
-    ports:
-    - 6333:6333/tcp
-    - 6334:6334/tcp
-    healthcheck:
-      test:
-      - CMD-SHELL
-      - bash -c ':> /dev/tcp/127.0.0.1/6333' || exit 1
-      interval: 60s
-      timeout: 5s
-      retries: 3
-    volumes:
-    - ./qdrant_data:/qdrant/storage
-    profiles:
-    - local
-
-
-volumes:
-  ollama:
-  open-webui:
-  qdrant:
-    
+include:
+# the react frontend
+  - frontend/frontend.yml
+# the backend that taht the uploaded files  
+  - backend/backend.yml
+# the filechecker  
+  - filechecker/filechecker.yml
+# apache tika server for OCR
+  - tika.yml
+# ollama instance for embedding
+  - ollama.yml
+# qdrant as vector db
+  - qdrant.yml     
