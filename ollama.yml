@@ -4,16 +4,16 @@ services:
     image: ollama/ollama
     container_name: ollama
     ports:
-    - 11434:11434/tcp
+      - 11434:11434/tcp
     healthcheck:
       test: ollama --version || exit 1
     command: serve
     volumes:
-    - ollama:/root/.ollama
+      - ollama:/root/.ollama
     deploy:
       resources:
         reservations:
           devices:
             - driver: nvidia
-              device_ids: ['all']
+              device_ids: ["all"]
               capabilities: [gpu]
