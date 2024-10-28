@@ -1,0 +1,8 @@
+ #apache tika server with ocr
+services:
+  tika:
+      image: logicalspark/docker-tikaserver:latest
+      container_name: tika  
+      ports:
+        - 9998:9998/tcp
+      restart: unless-stopped
