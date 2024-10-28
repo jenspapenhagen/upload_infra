@@ -1,0 +1,19 @@
+#ollama with GPU
+services:
+  ollama:
+    image: ollama/ollama
+    container_name: ollama
+    ports:
+    - 11434:11434/tcp
+    healthcheck:
+      test: ollama --version || exit 1
+    command: serve
+    volumes:
+    - ollama:/root/.ollama
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              device_ids: ['all']
+              capabilities: [gpu]
