@@ -5,6 +5,7 @@ include:
   - backend/backend.yml
 # the filechecker  
   - filechecker/filechecker.yml
+  
 # apache tika server for OCR
   - tika.yml
 # ollama instance for embedding
