@@ -17,3 +17,10 @@ services:
       - ./qdrant_data:/qdrant/storage
     profiles:
       - local
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.qdrant.rule=PathPrefix(`/qdrant`)
+      - traefik.http.routers.qdrant.entrypoints=web
+      - traefik.http.routers.qdrant.tls=false
+      - traefik.http.services.qdrant-service.loadbalancer.server.port=6333
+      - traefik.http.services.qdrant-service.loadbalancer.server.port=6334
