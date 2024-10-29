@@ -4,5 +4,11 @@ services:
     image: logicalspark/docker-tikaserver:latest
     container_name: tika
     ports:
-      - 9998:9998/tcp
+ #     - 9998:9998/tcp
     restart: unless-stopped
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.tika.rule=PathPrefix(`/tika`)
+      - traefik.http.routers.tika.entrypoints=web
+      - traefik.http.routers.tika.tls=false
+      - traefik.http.services.tika-service.loadbalancer.server.port=9998

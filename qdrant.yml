@@ -4,8 +4,8 @@ services:
     image: qdrant/qdrant:latest
     container_name: qdrant
     ports:
-      - 6333:6333/tcp
-      - 6334:6334/tcp
+    #  - 6333:6333/tcp
+    #  - 6334:6334/tcp
     healthcheck:
       test:
         - CMD-SHELL

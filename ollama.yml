@@ -7,7 +7,7 @@ services:
     tty: true
     restart: unless-stopped
     ports:
-      - 11434:11434
+ #     - 11434:11434
     environment:
       - OLLAMA_KEEP_ALIVE=24h
     volumes:
@@ -19,6 +19,12 @@ services:
             - driver: nvidia
               count: 1
               capabilities: [gpu]
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.ollama.rule=PathPrefix(`/ollama`)
+      - traefik.http.routers.ollama.entrypoints=web
+      - traefik.http.routers.ollama.tls=false
+      - traefik.http.services.ollama-service.loadbalancer.server.port=11434          
   ollama-webui:
     image: ghcr.io/open-webui/open-webui:main
     container_name: ollama-webui
@@ -27,7 +33,7 @@ services:
     depends_on:
       - ollama
     ports:
-      - 8080:8080
+#      - 8080:8080
     environment: # https://docs.openwebui.com/getting-started/env-configuration#default_models
       - OLLAMA_BASE_URLS=http://host.docker.internal:7869 #comma separated ollama hosts
       - ENV=dev
@@ -38,3 +44,9 @@ services:
     extra_hosts:
       - host.docker.internal:host-gateway
     restart: unless-stopped
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.ollama-ui.rule=PathPrefix(`/ollama-ui`)
+      - traefik.http.routers.ollama-ui.entrypoints=web
+      - traefik.http.routers.ollama-ui.tls=false
+      - traefik.http.services.ollama-ui-service.loadbalancer.server.port=8080
