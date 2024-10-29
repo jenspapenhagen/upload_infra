@@ -11,4 +11,6 @@ include:
 # ollama instance for embedding
   - ollama.yml
 # qdrant as vector db
-  - qdrant.yml     
+  - qdrant.yml
+  # Traefik SSL Reverse Proxy
+  - traefik.yml
