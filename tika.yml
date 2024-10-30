@@ -3,7 +3,7 @@ services:
   tika:
     image: logicalspark/docker-tikaserver:latest
     container_name: tika
-    ports:
+ #   ports:
  #     - 9998:9998/tcp
     restart: unless-stopped
     labels:
