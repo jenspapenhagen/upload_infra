@@ -19,6 +19,12 @@ services:
     #         - driver: nvidia
     #           count: 1
     #           capabilities: [gpu]
+    healthcheck:
+      test: ollama list || exit 1
+      interval: 10s
+      timeout: 30s
+      retries: 5
+      start_period: 10s
     labels:
       - traefik.enable=true
       - traefik.http.routers.ollama.rule=PathPrefix(`/ollama`)
