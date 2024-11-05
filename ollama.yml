@@ -12,13 +12,13 @@ services:
       - OLLAMA_KEEP_ALIVE=24h
     volumes:
       - ./ollama/ollama:/root/.ollama
-    deploy:
-      resources:
-        reservations:
-          devices:
-            - driver: nvidia
-              count: 1
-              capabilities: [gpu]
+    # deploy:
+    #   resources:
+    #     reservations:
+    #       devices:
+    #         - driver: nvidia
+    #           count: 1
+    #           capabilities: [gpu]
     labels:
       - traefik.enable=true
       - traefik.http.routers.ollama.rule=PathPrefix(`/ollama`)
