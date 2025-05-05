@@ -1,9 +1,12 @@
 [submodule "filechecker"]
 	path = filechecker
 	url = https://github.com/jenspapenhagen/upload_filechecker
+	branch = master
 [submodule "frontend"]
 	path = frontend
 	url = https://github.com/jenspapenhagen/upload_frontend
+	branch = master
 [submodule "backend"]
 	path = backend
 	url = https://github.com/jenspapenhagen/upload_backend
+	branch = master
